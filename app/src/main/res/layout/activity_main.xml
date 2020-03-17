@@ -121,13 +121,14 @@
     </LinearLayout>
 
     <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adBottomBanner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         app:adSize="BANNER"
-        app:adUnitId="ca-app-pub-5603330946616686/9509207981">
+        app:adUnitId="ca-app-pub-5603330946616686/5004655066">
 
     </com.google.android.gms.ads.AdView>
 

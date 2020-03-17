@@ -1,12 +1,14 @@
 package com.elacqua.gpacalculate
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.activity_main.*
@@ -21,8 +23,15 @@ class MainActivity : AppCompatActivity() {
 
 
         MobileAds.initialize(this) {}
-        val adRequest = AdRequest.Builder().addTestDevice("70DA19D80F160BE76A1B5D4B2BE32A17").build()
+        val adRequest = AdRequest.Builder().addTestDevice("936F41CD8A9CB2FF408B2CD35434A268")
+            .addTestDevice("70DA19D80F160BE76A1B5D4B2BE32A17").build()
         adBottomBanner.loadAd(adRequest)
+        adBottomBanner.adListener = (object: AdListener(){
+            override fun onAdFailedToLoad(errorCode: Int) {
+                super.onAdFailedToLoad(errorCode)
+                Log.e(TAG, "Ad Failed to Load: $errorCode")
+            }
+        })
 
         val gradesAdapter = ArrayAdapter.createFromResource(
             this,
@@ -81,7 +90,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
 
     private fun recyclerHandler(){
         val lessonName = txtLesson.text.toString()

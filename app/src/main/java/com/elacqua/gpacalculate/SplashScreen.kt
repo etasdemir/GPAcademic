@@ -14,7 +14,7 @@ class SplashScreen : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
         Glide.with(this).load(R.drawable.logo).into(imgLogo)
 
-        object: CountDownTimer(1500,1500){
+        object: CountDownTimer(1800,1800){
             override fun onFinish() {
                 val intent = Intent(this@SplashScreen,MainActivity::class.java)
                 startActivity(intent)

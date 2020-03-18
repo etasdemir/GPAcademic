@@ -3,11 +3,13 @@ package com.elacqua.gpacalculate
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_splash_screen.*
 
 class SplashScreen : AppCompatActivity() {
+    private val TAG = "SplashScreen"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +24,7 @@ class SplashScreen : AppCompatActivity() {
             }
 
             override fun onTick(millisUntilFinished: Long) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                Log.v(TAG, "seconds remaining: ${millisUntilFinished / 1000}")
             }
 
         }.start()

@@ -1,2 +1,2 @@
 # GPAcademic
-A simple GPA calculation android app
+A simple app that can calculate people's GPA.

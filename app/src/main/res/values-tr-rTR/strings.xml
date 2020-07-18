@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GPAcademic</string>
+    <string name="title_home">Ana Sayfa</string>
+    <string name="title_dashboard">Dönem</string>
+    <string name="do_not_show_again">Bir daha gösterme</string>
+    <string name="select_grading_scale">Not sistemi seçiniz</string>
+    <string name="cancel">İptal</string>
+    <string name="save">Kaydet</string>
+    <string name="saved_term_list">Dönem listesine bir isim ver</string>
+    <string name="total_credit">Toplam Kredi</string>
+    <string name="term_credit">Dönem Kredisi</string>
+    <string name="current_gpa">Şu anki GPA</string>
+    <string name="dream_gpa">Hedef GPA</string>
+    <string name="term_list">Kaydedilmiş Dönemler</string>
+    <string name="lesson_name">Ders Adı</string>
+    <string name="find_gpa">Ortalama Hesapla</string>
+    <string name="dream_gpa_wrong_input">Başaramadın :(</string>
+</resources>

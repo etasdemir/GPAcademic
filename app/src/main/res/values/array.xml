@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="notes">
+    <string-array name="grades_type_1">
         <item>A1</item>
         <item>A2</item>
         <item>A3</item>
@@ -14,17 +14,42 @@
         <item>F1</item>
     </string-array>
 
+    <string-array name="grades_type_2">
+        <item>A</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B</item>
+        <item>B-</item>
+        <item>C+</item>
+        <item>C</item>
+        <item>C-</item>
+        <item>D+</item>
+        <item>D</item>
+        <item>F</item>
+    </string-array>
+
+    <string-array name="grades_type_3">
+        <item>AA</item>
+        <item>BA</item>
+        <item>BB</item>
+        <item>CB</item>
+        <item>CC</item>
+        <item>DC</item>
+        <item>DD</item>
+        <item>F</item>
+    </string-array>
+
     <string-array name="credits">
-        <item>1 Credit</item>
-        <item>2 Credits</item>
-        <item>3 Credits</item>
-        <item>4 Credits</item>
-        <item>5 Credits</item>
-        <item>6 Credits</item>
-        <item>7 Credits</item>
-        <item>8 Credits</item>
-        <item>9 Credits</item>
-        <item>10 Credits</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
     </string-array>
 
 

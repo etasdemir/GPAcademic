@@ -1,10 +1,31 @@
 <resources>
-    <string name="app_name">GPAcademic</string>
+    <string name="app_name" translatable="false">GPAcademic</string>
+    <string name="title_activity_main" translatable="false">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Term</string>
+    <string name="title_notifications">Dream GPA</string>
 
-    <string name="textTitle">Lesson Name</string>
-    <string name="btnAdd">Add</string>
-    <string name="btnDelete">Delete</string>
-    <string name="btnCalc">Calculate</string>
+    <string name="gpa_type_1" translatable="false">A1, A2, A3, B1 B2, B3, C1, C2, C3, D, F</string>
+    <string name="gpa_type_2" translatable="false">A, A-, B+, B, B-, C+, C, C-, D+, D, F</string>
+    <string name="gpa_type_3" translatable="false">AA, BA, BB, CB, CC, DC, DD, F</string>
 
+    <string name="do_not_show_again">Do not show again</string>
+    <string name="select_grading_scale">Select a grading scale</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="saved_term_list">Give a name to your saved term list.</string>
+
+    <string name="total_credit">Total Credit</string>
+    <string name="term_credit">Term Credit</string>
+    <string name="current_gpa">Current GPA</string>
+    <string name="dream_gpa">Dream GPA</string>
+
+    <string name="required_gpa">Find Required GPA</string>
+    <string name="term_list">Saved Terms</string>
+    <string name="find_gpa">Find GPA</string>
+
+    <string name="lesson_name">Lesson Name</string>
+    <string name="dream_gpa_wrong_input">Başaramadın</string>
 
 </resources>

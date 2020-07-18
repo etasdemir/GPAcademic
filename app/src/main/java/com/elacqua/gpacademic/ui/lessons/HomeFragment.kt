@@ -123,7 +123,13 @@ class HomeFragment : Fragment() {
         Handler().postDelayed({findNavController().navigate(R.id.navigation_term)}, 700)
     }
 
+    override fun onPause() {
+        super.onPause()
+        homeViewModel.updateId = null
+    }
 
-
-
+    override fun onDestroyView() {
+        recyclerView.adapter = null
+        super.onDestroyView()
+    }
 }

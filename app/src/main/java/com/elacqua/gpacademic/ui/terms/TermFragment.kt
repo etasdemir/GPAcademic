@@ -109,4 +109,9 @@ class TermFragment : Fragment(), RecyclerViewTermAdapter.OnItemClickListener {
         val intent = Intent(requireContext(), GpaTypeActivity::class.java)
         startActivity(intent)
     }
+
+    override fun onDestroyView() {
+        recyclerViewTerm.adapter = null
+        super.onDestroyView()
+    }
 }

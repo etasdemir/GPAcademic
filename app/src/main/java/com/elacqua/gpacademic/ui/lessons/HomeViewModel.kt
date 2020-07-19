@@ -4,8 +4,8 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.elacqua.gpacademic.data.local.Lesson
 import com.elacqua.gpacademic.data.Repository
+import com.elacqua.gpacademic.data.local.Lesson
 import com.elacqua.gpacademic.data.local.Term
 import com.elacqua.gpacademic.utility.Helper
 import kotlinx.coroutines.CoroutineScope
@@ -40,7 +40,8 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         _lessonMutableLiveList.value = lessons as ArrayList<Lesson>
     }
 
-    fun insertOrUpdateTerm(name:String, lessonList: List<Lesson>){
+    fun insertOrUpdateTerm(name:String){
+        val lessonList: ArrayList<Lesson> = _lessonMutableLiveList.value!!
         if (updateId != null){
             updateTerm(name, lessonList)
         } else {
@@ -69,7 +70,8 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun getGpa(type: Int, lessonList: ArrayList<Lesson>): String {
+    fun getGpa(type: Int): String {
+        val lessonList: ArrayList<Lesson> = _lessonMutableLiveList.value!!
         val grade = Helper.calculateGPA(type, lessonList)
         return gpa + grade
     }

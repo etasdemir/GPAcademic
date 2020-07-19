@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -25,7 +24,6 @@ private const val TAG = "TermFragment"
 
 class TermFragment : Fragment(), RecyclerViewTermAdapter.OnItemClickListener {
 
-    private lateinit var termsLiveData: LiveData<List<Term>>
     private lateinit var recyclerViewAdapter: RecyclerViewTermAdapter
     private val termViewModel: TermViewModel by viewModels()
     private var type: Int ?= null
@@ -33,7 +31,6 @@ class TermFragment : Fragment(), RecyclerViewTermAdapter.OnItemClickListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        termsLiveData = termViewModel.getTermLiveData()
         getGpaType()
         return inflater.inflate(R.layout.fragment_term, container, false)
     }
@@ -49,7 +46,7 @@ class TermFragment : Fragment(), RecyclerViewTermAdapter.OnItemClickListener {
         initRecyclerView()
         initSwipeToDelete()
 
-        termsLiveData.observe(viewLifecycleOwner, Observer {termList ->
+        termViewModel.termsLiveData.observe(viewLifecycleOwner, Observer {termList ->
             recyclerViewAdapter.submitList(termList)
         })
 
@@ -100,8 +97,8 @@ class TermFragment : Fragment(), RecyclerViewTermAdapter.OnItemClickListener {
 
     private fun calculateGpaAndUpdateButton() {
         val termHashedMap = recyclerViewAdapter.getTermHashedMap()
-        val recyclerViewList = recyclerViewAdapter.currentList
-        val cgpa = termViewModel.calculateCgpa(type!!, termHashedMap, recyclerViewList)
+        val termList = recyclerViewAdapter.currentList
+        val cgpa = termViewModel.calculateCgpa(type!!, termHashedMap, termList)
         btnCalculateCgpa.text = cgpa
     }
 

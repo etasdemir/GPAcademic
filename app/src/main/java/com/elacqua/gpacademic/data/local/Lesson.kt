@@ -1,4 +1,4 @@
-package com.elacqua.gpacademic.data
+package com.elacqua.gpacademic.data.local
 
 import android.os.Parcelable
 import androidx.room.Entity

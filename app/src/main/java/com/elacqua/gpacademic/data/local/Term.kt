@@ -1,9 +1,10 @@
-package com.elacqua.gpacademic.data
+package com.elacqua.gpacademic.data.local
 
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.elacqua.gpacademic.data.local.Lesson
 import com.elacqua.gpacademic.utility.LessonConverter
 import kotlinx.android.parcel.Parcelize
 

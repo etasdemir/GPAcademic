@@ -3,9 +3,9 @@ package com.elacqua.gpacademic.ui.terms
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.elacqua.gpacademic.data.Lesson
+import com.elacqua.gpacademic.data.local.Lesson
 import com.elacqua.gpacademic.data.Repository
-import com.elacqua.gpacademic.data.Term
+import com.elacqua.gpacademic.data.local.Term
 import com.elacqua.gpacademic.utility.Helper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.elacqua.gpacademic.R
-import com.elacqua.gpacademic.data.Term
+import com.elacqua.gpacademic.data.local.Term
 import kotlinx.android.synthetic.main.item_term.view.*
 
 class RecyclerViewTermAdapter(val listener: OnItemClickListener):
@@ -40,7 +40,7 @@ class RecyclerViewTermAdapter(val listener: OnItemClickListener):
     }
 
     /**
-     * Used if/else because when an element deleted can not access last element, indexOutOfBound
+     * Used if/else because when an element deleted, can not access last element, indexOutOfBound
      * because position returns size
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -55,7 +55,7 @@ class RecyclerViewTermAdapter(val listener: OnItemClickListener):
         }
     }
 
-    fun getItemAt(position: Int): Term{
+    fun getItemAt(position: Int): Term {
         return getItem(position)
     }
 

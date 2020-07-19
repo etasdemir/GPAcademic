@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.elacqua.gpacademic.GpaTypeActivity
 import com.elacqua.gpacademic.R
-import com.elacqua.gpacademic.data.Term
+import com.elacqua.gpacademic.data.local.Term
 import com.elacqua.gpacademic.utility.AppPreferences
 import kotlinx.android.synthetic.main.fragment_term.*
 

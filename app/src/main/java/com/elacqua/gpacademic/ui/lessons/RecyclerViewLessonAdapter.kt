@@ -9,16 +9,17 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.elacqua.gpacademic.R
-import com.elacqua.gpacademic.data.Lesson
+import com.elacqua.gpacademic.data.local.Lesson
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.item_lesson.view.*
 
 class RecyclerViewLessonAdapter(context: Context, private val type: Int):
-    RecyclerView.Adapter<RecyclerViewLessonAdapter.ViewHolder>(){
+    ListAdapter<Lesson, RecyclerViewLessonAdapter.ViewHolder>(DIFF_CALLBACK) {
 
-    private var lessonList = ArrayList<Lesson>()
     private val creditAdapter = ArrayAdapter
         .createFromResource(context,
             R.array.credits, android.R.layout.simple_spinner_dropdown_item)
@@ -31,22 +32,35 @@ class RecyclerViewLessonAdapter(context: Context, private val type: Int):
         return ViewHolder(view, CustomEditTextListener())
     }
 
+    companion object {
+        private val DIFF_CALLBACK = object: DiffUtil.ItemCallback<Lesson>(){
+            override fun areItemsTheSame(oldItem: Lesson, newItem: Lesson): Boolean {
+                return oldItem === newItem
+            }
+
+            override fun areContentsTheSame(oldItem: Lesson, newItem: Lesson): Boolean {
+                return oldItem == newItem
+            }
+
+        }
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.customEditTextListener.updatePosition(position)
         holder.spinnerGrade.run {
             adapter = gradeAdapter
-            setSelection(gradeAdapter.getPosition(lessonList[position].grade))
+            setSelection(gradeAdapter.getPosition(currentList[position].grade))
             onItemSelectedListener = spinnerGradeSelectListener(position)
         }
 
         holder.spinnerCredit.run {
             adapter = creditAdapter
-            setSelection(creditAdapter.getPosition(lessonList[position].credits.toString()))
+            setSelection(creditAdapter.getPosition(currentList[position].credits.toString()))
             onItemSelectedListener = spinnerCreditSelected(position)
         }
 
         holder.txtLesson.run {
-            editText?.setText(lessonList[holder.adapterPosition].lessonName)
+            editText?.setText(currentList[holder.adapterPosition].lessonName)
         }
     }
 
@@ -59,8 +73,8 @@ class RecyclerViewLessonAdapter(context: Context, private val type: Int):
 
     private fun spinnerGradeSelectListener(itemPosition: Int) = object: AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            if (itemPosition < lessonList.size){
-                lessonList[itemPosition].grade = parent?.selectedItem as String
+            if (itemPosition < currentList.size){
+                currentList[itemPosition].grade = parent?.selectedItem as String
             }
         }
 
@@ -71,38 +85,14 @@ class RecyclerViewLessonAdapter(context: Context, private val type: Int):
 
     private fun spinnerCreditSelected(itemPosition: Int) = object: AdapterView.OnItemSelectedListener{
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            if (itemPosition < lessonList.size){
-                lessonList[itemPosition].credits = (parent?.selectedItem as String).toInt()
+            if (itemPosition < currentList.size){
+                currentList[itemPosition].credits = (parent?.selectedItem as String).toInt()
             }
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {
             return
         }
-    }
-
-    override fun getItemCount(): Int {
-        return lessonList.size
-    }
-
-    fun addLesson(){
-        val lesson = Lesson("", 1, "")
-        lessonList.add(lesson)
-        notifyItemInserted(lessonList.size)
-    }
-
-    fun deleteItemAt(position: Int) {
-        lessonList.removeAt(position)
-        notifyItemRemoved(position)
-    }
-
-    fun getAdapterList(): ArrayList<Lesson>{
-        return lessonList
-    }
-
-    fun setAdapterList(lessonList: List<Lesson>){
-        this.lessonList = ArrayList(lessonList)
-        notifyDataSetChanged()
     }
 
     inner class ViewHolder(
@@ -123,12 +113,12 @@ class RecyclerViewLessonAdapter(context: Context, private val type: Int):
         private var position = -1
 
         fun updatePosition(position: Int) {
-            this.position = position;
+            this.position = position
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            if (position != -1 && position < lessonList.size){
-                lessonList[position].lessonName = s.toString()
+            if (position != -1 && position < currentList.size){
+                currentList[position].lessonName = s.toString()
             }
         }
 

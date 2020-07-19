@@ -1,6 +1,6 @@
 package com.elacqua.gpacademic.utility
 
-import com.elacqua.gpacademic.data.Lesson
+import com.elacqua.gpacademic.data.local.Lesson
 import java.util.*
 
 class Helper {

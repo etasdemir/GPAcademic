@@ -1,7 +1,7 @@
 package com.elacqua.gpacademic.utility
 
 import androidx.room.TypeConverter
-import com.elacqua.gpacademic.data.Lesson
+import com.elacqua.gpacademic.data.local.Lesson
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

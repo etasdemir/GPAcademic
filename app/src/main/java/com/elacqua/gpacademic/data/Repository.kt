@@ -2,6 +2,9 @@ package com.elacqua.gpacademic.data
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import com.elacqua.gpacademic.data.local.LocalDatabase
+import com.elacqua.gpacademic.data.local.Term
+import com.elacqua.gpacademic.data.local.TermDao
 
 class Repository(application: Application) {
     private var database: LocalDatabase = LocalDatabase.getDatabase(application)

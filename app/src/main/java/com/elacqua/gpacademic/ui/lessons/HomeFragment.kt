@@ -7,14 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.elacqua.gpacademic.R
-import com.elacqua.gpacademic.data.Lesson
-import com.elacqua.gpacademic.data.Term
+import com.elacqua.gpacademic.data.local.Lesson
+import com.elacqua.gpacademic.data.local.Term
 import com.elacqua.gpacademic.utility.AppPreferences
 import kotlinx.android.synthetic.main.dialog_term.*
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -52,7 +53,7 @@ class HomeFragment : Fragment() {
         setValuesFromBundle()
 
         btnAddLesson.setOnClickListener {
-            recyclerViewLessonAdapter.addLesson()
+            homeViewModel.addLesson()
         }
 
         btnAddTerm.setOnClickListener {
@@ -60,10 +61,15 @@ class HomeFragment : Fragment() {
         }
 
         btnCalculateGpa.setOnClickListener {
-            val lessonList = recyclerViewLessonAdapter.getAdapterList()
-            val gpa = homeViewModel.getGpa(type!!, lessonList)
+            val lessonList = recyclerViewLessonAdapter.currentList
+            val gpa = homeViewModel.getGpa(type!!, ArrayList(lessonList))
             btnCalculateGpa.text = gpa
         }
+
+        homeViewModel.lessonLiveDataList.observe(viewLifecycleOwner, Observer{ lessonList ->
+            val newLessonList = ArrayList<Lesson>().apply { addAll(lessonList) }
+            recyclerViewLessonAdapter.submitList(newLessonList)
+        })
     }
 
     private fun initRecyclerView() {
@@ -89,7 +95,7 @@ class HomeFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                recyclerViewLessonAdapter.deleteItemAt(position)
+                homeViewModel.deleteLessonAt(position)
             }
         }).attachToRecyclerView(recyclerView)
     }
@@ -98,7 +104,7 @@ class HomeFragment : Fragment() {
         if (bundle != null){
             val term = bundle!!.getParcelable<Term>("getTerm") ?: return
             homeViewModel.updateId = term.id
-            recyclerViewLessonAdapter.setAdapterList(term.lessons)
+            homeViewModel.setLessonList(term.lessons)
         }
     }
 
@@ -108,7 +114,7 @@ class HomeFragment : Fragment() {
         dialog.txtTermName.requestFocus()
         dialog.btnDialogSave.setOnClickListener {
             val termName = (dialog.txtTermName.text).toString()
-            val lessonList = recyclerViewLessonAdapter.getAdapterList()
+            val lessonList = recyclerViewLessonAdapter.currentList
             addTerm(termName, lessonList)
             dialog.dismiss()
         }

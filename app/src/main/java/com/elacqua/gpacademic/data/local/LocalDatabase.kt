@@ -1,4 +1,4 @@
-package com.elacqua.gpacademic.data
+package com.elacqua.gpacademic.data.local
 
 import android.app.Application
 import androidx.room.Database
@@ -17,8 +17,8 @@ abstract class LocalDatabase: RoomDatabase() {
         @Volatile
         private lateinit var instance: LocalDatabase
 
-        fun getDatabase(application: Application): LocalDatabase{
-            if (!::instance.isInitialized){
+        fun getDatabase(application: Application): LocalDatabase {
+            if (!Companion::instance.isInitialized){
                 instance = Room.databaseBuilder(application, LocalDatabase::class.java, "gpaDb")
                     .fallbackToDestructiveMigration()
                     .build()

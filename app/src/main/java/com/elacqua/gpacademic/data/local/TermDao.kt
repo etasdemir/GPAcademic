@@ -1,7 +1,8 @@
-package com.elacqua.gpacademic.data
+package com.elacqua.gpacademic.data.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.elacqua.gpacademic.data.local.Term
 
 @Dao
 interface TermDao {

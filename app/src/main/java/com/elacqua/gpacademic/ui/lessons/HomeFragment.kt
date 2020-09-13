@@ -61,7 +61,8 @@ class HomeFragment : Fragment() {
         }
 
         btnCalculateGpa.setOnClickListener {
-            val gpa = homeViewModel.getGpa(type!!)
+            val lessonList = recyclerViewLessonAdapter.currentList
+            val gpa = homeViewModel.getGpa(type!!, ArrayList(lessonList))
             btnCalculateGpa.text = gpa
         }
 
@@ -113,7 +114,8 @@ class HomeFragment : Fragment() {
         dialog.txtTermName.requestFocus()
         dialog.btnDialogSave.setOnClickListener {
             val termName = (dialog.txtTermName.text).toString()
-            addTerm(termName)
+            val lessonList = recyclerViewLessonAdapter.currentList
+            addTerm(termName, lessonList)
             dialog.dismiss()
         }
         dialog.btnDialogCancel.setOnClickListener {
@@ -122,8 +124,8 @@ class HomeFragment : Fragment() {
         dialog.show()
     }
 
-    private fun addTerm(termName: String) {
-        homeViewModel.insertOrUpdateTerm(termName)
+    private fun addTerm(termName: String, lessonList: List<Lesson>) {
+        homeViewModel.insertOrUpdateTerm(termName, lessonList)
         Handler().postDelayed({findNavController().navigate(R.id.navigation_term)}, 700)
     }
 

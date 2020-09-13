@@ -15,5 +15,7 @@
     <string name="term_list">Kaydedilmiş Dönemler</string>
     <string name="lesson_name">Ders Adı</string>
     <string name="find_gpa">Ortalama Hesapla</string>
-    <string name="dream_gpa_wrong_input">Başaramadın :(</string>
+    <string name="dream_gpa_wrong_input">Maalesef, başaramadın :(</string>
+    <string name="title_notifications">Hedef GPA</string>
+    <string name="required_gpa">Hedef Ortalama Hesapla</string>
 </resources>

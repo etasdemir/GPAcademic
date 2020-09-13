@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">GPAcademic</string>
+    <string name="app_name">GPAcademic</string>
     <string name="title_activity_main" translatable="false">MainActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Term</string>
@@ -26,6 +26,6 @@
     <string name="find_gpa">Find GPA</string>
 
     <string name="lesson_name">Lesson Name</string>
-    <string name="dream_gpa_wrong_input">Başaramadın</string>
+    <string name="dream_gpa_wrong_input">Sorry, impossible :(</string>
 
 </resources>

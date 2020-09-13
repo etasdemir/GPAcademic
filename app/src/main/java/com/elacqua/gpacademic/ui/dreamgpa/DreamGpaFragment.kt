@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.elacqua.gpacademic.R
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_dream_gpa.*
 
-private const val TAG = "DreamGpaFragment"
-
+@AndroidEntryPoint
 class DreamGpaFragment : Fragment() {
 
     private val dreamGpaViewModel: DreamGpaViewModel by viewModels()
@@ -45,6 +45,6 @@ class DreamGpaFragment : Fragment() {
     }
 
     private fun showInputError() {
-        Snackbar.make(linearLayoutDreamGpa, R.string.dream_gpa_wrong_input, Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(constraintLayoutDreamGpa, R.string.dream_gpa_wrong_input, Snackbar.LENGTH_SHORT).show()
     }
 }

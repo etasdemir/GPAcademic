@@ -1,8 +1,10 @@
 package com.elacqua.gpacademic.ui.dreamgpa
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 
-class DreamGpaViewModel : ViewModel() {
+class DreamGpaViewModel @ViewModelInject constructor(): ViewModel() {
+
     fun calculateDreamGpa(totalCredit: String, termCredit: String, currentGpa: String, dreamGpa: String): Float {
         if (totalCredit.isBlank() || termCredit.isBlank() || currentGpa.isBlank() || dreamGpa.isBlank()){
             return 0F
@@ -15,6 +17,4 @@ class DreamGpaViewModel : ViewModel() {
         return (((convertedTotalCredit + convertedTermCredit)*convertedDreamGpa)
                 - (convertedTotalCredit*convertedCurrentGpa))/convertedTermCredit
     }
-
-
 }

@@ -1,18 +1,11 @@
 package com.elacqua.gpacademic.data
 
-import android.app.Application
 import androidx.lifecycle.LiveData
-import com.elacqua.gpacademic.data.local.LocalDatabase
-import com.elacqua.gpacademic.data.local.Term
-import com.elacqua.gpacademic.data.local.TermDao
+import com.elacqua.gpacademic.data.db.dao.TermDao
+import com.elacqua.gpacademic.data.db.entities.Term
+import javax.inject.Inject
 
-class Repository(application: Application) {
-    private var database: LocalDatabase = LocalDatabase.getDatabase(application)
-    private var termDao: TermDao
-
-    init {
-        termDao = database.termDao()
-    }
+class Repository @Inject constructor(private val termDao: TermDao) {
 
     suspend fun insertTerm(term: Term): Long{
         return termDao.insertTerm(term)

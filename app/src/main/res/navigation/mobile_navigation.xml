@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.elacqua.gpacademic.ui.lessons.HomeFragment"
+        android:name="com.elacqua.gpacademic.ui.lesson.LessonFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_term"
-        android:name="com.elacqua.gpacademic.ui.terms.TermFragment"
+        android:name="com.elacqua.gpacademic.ui.term.TermFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_term" />
 

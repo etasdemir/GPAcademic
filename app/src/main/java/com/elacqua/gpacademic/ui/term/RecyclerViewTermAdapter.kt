@@ -13,7 +13,7 @@ import com.elacqua.gpacademic.R
 import com.elacqua.gpacademic.data.db.entities.Term
 import kotlinx.android.synthetic.main.item_term.view.*
 
-class RecyclerViewTermAdapter(val listener: OnItemClickListener):
+class RecyclerViewTermAdapter(private val listener: OnItemClickListener):
     ListAdapter<Term, RecyclerViewTermAdapter.ViewHolder>(
         DIFF_CALLBACK
     ) {
@@ -39,10 +39,6 @@ class RecyclerViewTermAdapter(val listener: OnItemClickListener):
         return ViewHolder(view, CustomOnCheckedListener())
     }
 
-    /**
-     * Used if/else because when an element deleted, can not access last element, indexOutOfBound
-     * because position returns size
-     */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.txtTermName.text = currentList[position].termName
         holder.customOnCheckedListener.updatePosition(position)
@@ -89,8 +85,8 @@ class RecyclerViewTermAdapter(val listener: OnItemClickListener):
             }
         }
     }
+}
 
-    interface OnItemClickListener{
-        fun onClick(term: Term)
-    }
+interface OnItemClickListener{
+    fun onClick(term: Term)
 }

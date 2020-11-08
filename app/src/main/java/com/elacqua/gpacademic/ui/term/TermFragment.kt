@@ -7,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,34 +18,24 @@ import com.elacqua.gpacademic.ui.GpaTypeActivity
 import com.elacqua.gpacademic.util.AppPreferences
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_term.*
-import timber.log.Timber
 
 @AndroidEntryPoint
-class TermFragment : Fragment(), RecyclerViewTermAdapter.OnItemClickListener {
+class TermFragment : Fragment(){
 
     private lateinit var recyclerViewAdapter: RecyclerViewTermAdapter
-    private val termViewModel by activityViewModels<TermViewModel>()
-    private var type: Int ?= null
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-
-        getGpaType()
-        return inflater.inflate(R.layout.fragment_term, container, false)
+    private val termViewModel: TermViewModel by navGraphViewModels(R.id.mobile_navigation){
+        defaultViewModelProviderFactory
     }
-
-    private fun getGpaType() {
-        val appPreferences = AppPreferences(requireContext())
-        type = appPreferences.gpaType
-    }
+    private var gpaType: Int ?= null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        getGpaType()
         initRecyclerView()
         initSwipeToDelete()
 
-        termViewModel.termsLiveData.observe(viewLifecycleOwner, Observer {termList ->
+        termViewModel.termsLiveData.observe(viewLifecycleOwner, { termList ->
             recyclerViewAdapter.submitList(termList)
         })
 
@@ -59,20 +48,23 @@ class TermFragment : Fragment(), RecyclerViewTermAdapter.OnItemClickListener {
         }
     }
 
-    override fun onClick(term: Term) {
-        Timber.d( "onClick: $term")
-        val bundle = bundleOf("getTerm" to term)
-        findNavController().navigate(R.id.navigation_home, bundle)
+    private fun getGpaType() {
+        val appPreferences = AppPreferences(requireContext())
+        gpaType = appPreferences.gpaType
     }
 
     private fun initRecyclerView() {
         recyclerViewAdapter =
-            RecyclerViewTermAdapter(this)
-        val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            RecyclerViewTermAdapter(object: OnItemClickListener{
+                override fun onClick(term: Term) {
+                    val bundle = bundleOf("getTerm" to term)
+                    findNavController().navigate(R.id.navigation_home, bundle)
+                }
+            })
         recyclerViewTerm.run {
             setHasFixedSize(true)
             adapter = recyclerViewAdapter
-            this.layoutManager = layoutManager
+            this.layoutManager = LinearLayoutManager(requireContext())
         }
     }
 
@@ -98,7 +90,7 @@ class TermFragment : Fragment(), RecyclerViewTermAdapter.OnItemClickListener {
     private fun calculateGpaAndUpdateButton() {
         val termHashedMap = recyclerViewAdapter.getTermHashedMap()
         val termList = recyclerViewAdapter.currentList
-        val cgpa = termViewModel.calculateCgpa(type!!, termHashedMap, termList)
+        val cgpa = termViewModel.calculateCumulativeGpa(gpaType!!, termHashedMap, termList)
         btnCalculateCgpa.text = cgpa
     }
 
@@ -110,5 +102,10 @@ class TermFragment : Fragment(), RecyclerViewTermAdapter.OnItemClickListener {
     override fun onDestroyView() {
         recyclerViewTerm.adapter = null
         super.onDestroyView()
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_term, container, false)
     }
 }

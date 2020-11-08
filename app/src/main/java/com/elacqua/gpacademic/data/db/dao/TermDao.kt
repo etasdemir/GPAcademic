@@ -15,9 +15,6 @@ interface TermDao {
     @Query("select * from Term")
     fun getAllTerms(): LiveData<List<Term>>
 
-    @Query("delete from Term")
-    suspend fun nukeTermTable()
-
     @Update
     suspend fun updateTerm(term: Term)
 }

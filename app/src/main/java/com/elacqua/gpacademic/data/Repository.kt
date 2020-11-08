@@ -23,8 +23,4 @@ class Repository @Inject constructor(private val termDao: TermDao) {
         termDao.updateTerm(term)
     }
 
-    suspend fun nukeTermTable(){
-        termDao.nukeTermTable()
-    }
-
 }

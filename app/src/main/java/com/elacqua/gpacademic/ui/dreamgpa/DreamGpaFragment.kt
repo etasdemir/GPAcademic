@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.navigation.navGraphViewModels
 import com.elacqua.gpacademic.R
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -14,7 +14,9 @@ import kotlinx.android.synthetic.main.fragment_dream_gpa.*
 @AndroidEntryPoint
 class DreamGpaFragment : Fragment() {
 
-    private val dreamGpaViewModel: DreamGpaViewModel by viewModels()
+    private val dreamGpaViewModel: DreamGpaViewModel by navGraphViewModels(R.id.mobile_navigation){
+        defaultViewModelProviderFactory
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

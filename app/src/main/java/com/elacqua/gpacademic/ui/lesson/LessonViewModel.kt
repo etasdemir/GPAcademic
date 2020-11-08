@@ -3,11 +3,11 @@ package com.elacqua.gpacademic.ui.lesson
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.elacqua.gpacademic.data.Repository
 import com.elacqua.gpacademic.data.db.entities.Lesson
 import com.elacqua.gpacademic.data.db.entities.Term
-import com.elacqua.gpacademic.util.Helper
-import kotlinx.coroutines.CoroutineScope
+import com.elacqua.gpacademic.util.Utility
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -21,13 +21,6 @@ class LessonViewModel @ViewModelInject constructor(private val repository: Repos
     val lessonLiveDataList = _lessonMutableLiveList
     var updateId: Int ?= null
 
-    init {
-        Timber.d( "home view model created: " )
-//        if (savedStateHandle.contains("lessons")){
-//            _lessonMutableLiveList.value = savedStateHandle.get("lessons")
-//        }
-    }
-    
     fun addLesson() {
         val lesson = Lesson("", 1, "")
         _lessonMutableLiveList.value!!.add(lesson)
@@ -53,19 +46,18 @@ class LessonViewModel @ViewModelInject constructor(private val repository: Repos
     }
 
     private fun updateTerm(name: String, lessonList: List<Lesson>){
-        CoroutineScope(IO).launch {
+        viewModelScope.launch(IO) {
             val term = Term(
                 updateId,
                 name,
                 lessonList
             )
             repository.updateTerm(term)
-            Timber.d("insertTerm: Updated")
         }
     }
 
     private fun insertTerm(name: String, lessonList: List<Lesson>){
-        CoroutineScope(IO).launch {
+        viewModelScope.launch(IO) {
             val term =
                 Term(null, name, lessonList)
             val insertedId = repository.insertTerm(term)
@@ -75,7 +67,7 @@ class LessonViewModel @ViewModelInject constructor(private val repository: Repos
 
     fun getGpa(type: Int): String {
         val lessonList: ArrayList<Lesson> = _lessonMutableLiveList.value!!
-        val grade = Helper.calculateGPA(type, lessonList)
+        val grade = Utility.calculateGPA(type, lessonList)
         return gpa + grade
     }
 

@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,37 +25,29 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class LessonFragment : Fragment() {
 
     private lateinit var recyclerViewLessonAdapter: RecyclerViewLessonAdapter
-    private val homeViewModel: LessonViewModel by activityViewModels()
-    private var bundle: Bundle? = null
-    private var type: Int ?= null
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        bundle = arguments
-        getGpaType()
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    private val homeViewModel: LessonViewModel by navGraphViewModels(R.id.mobile_navigation){
+        defaultViewModelProviderFactory
     }
-
-    private fun getGpaType() {
-        val sharedRef = AppPreferences(requireContext())
-        type = sharedRef.gpaType
-    }
+    private var gpaType: Int ?= null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        getGpaType()
         initRecyclerView()
         initSwipeToDelete()
-        setValuesFromBundle()
+        setValuesFromArguments()
         initButtonListeners()
 
         homeViewModel.lessonLiveDataList.observe(viewLifecycleOwner, Observer{ lessonList ->
             val newLessonList = ArrayList<Lesson>().apply { addAll(lessonList) }
             recyclerViewLessonAdapter.submitList(newLessonList)
         })
+    }
+
+    private fun getGpaType() {
+        val sharedRef = AppPreferences(requireContext())
+        gpaType = sharedRef.gpaType
     }
 
     private fun initButtonListeners() {
@@ -68,7 +60,7 @@ class LessonFragment : Fragment() {
         }
 
         btnCalculateGpa.setOnClickListener {
-            val gpa = homeViewModel.getGpa(type!!)
+            val gpa = homeViewModel.getGpa(gpaType!!)
             btnCalculateGpa.text = gpa
         }
     }
@@ -77,7 +69,7 @@ class LessonFragment : Fragment() {
         recyclerViewLessonAdapter =
             RecyclerViewLessonAdapter(
                 requireContext(),
-                type!!
+                gpaType!!
             )
         recyclerView.run {
             adapter = recyclerViewLessonAdapter
@@ -101,12 +93,11 @@ class LessonFragment : Fragment() {
         }).attachToRecyclerView(recyclerView)
     }
 
-    private fun setValuesFromBundle() {
-        if (bundle != null){
-            val term = bundle!!.getParcelable<Term>("getTerm") ?: return
-            homeViewModel.updateId = term.id
-            homeViewModel.setLessonList(term.lessons)
-        }
+    private fun setValuesFromArguments() {
+        val args = arguments ?: Bundle()
+        val term = args.getParcelable<Term>("getTerm") ?: return
+        homeViewModel.updateId = term.id
+        homeViewModel.setLessonList(term.lessons)
     }
 
     private fun createAddTermDialog() {
@@ -144,5 +135,14 @@ class LessonFragment : Fragment() {
     override fun onDestroyView() {
         recyclerView.adapter = null
         super.onDestroyView()
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 }

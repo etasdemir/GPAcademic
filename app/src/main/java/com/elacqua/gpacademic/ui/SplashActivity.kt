@@ -18,7 +18,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         CoroutineScope(Dispatchers.Main).launch {
-            delay(1200)
+            delay(1000)
             navigateToGpaTypeOrMain()
         }
     }

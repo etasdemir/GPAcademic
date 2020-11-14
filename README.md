@@ -5,4 +5,6 @@ Calculate your grade poing average with our quick and easy-to-use GPA calculator
 Using:
 Navigation, MVVM, Room, Hilt, Coroutines, LiveData, ViewModel, LeakCanary, Shared Preferences.
 
+Released on Google Play: [GPAcademic](https://play.google.com/store/apps/details?id=com.elacqua.gpacademic)
+
 ![](https://github.com/etasdemir/GPAcademic/blob/master/showcase.gif?raw=true)
